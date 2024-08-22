@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 
-'''LRU Caching
-'''
-
-
+"""Most Recently Used caching module.
+"""
 from collections import OrderedDict
+
 from base_caching import BaseCaching
 
 
-class LRUCache(BaseCaching):
-    '''A class `LRUCache` that inherits from
-       `BaseCaching` and is a caching system
-    '''
-
+class MRUCache(BaseCaching):
+    """Represents an object that allows storing and
+    retrieving items from a dictionary with an MRU
+    removal mechanism when the limit is reached.
+    """
     def __init__(self):
-        '''initialize the cache
-        '''
+        """Initializes the cache.
+        """
         super().__init__()
         self.cache_data = OrderedDict()
 
@@ -26,8 +25,8 @@ class LRUCache(BaseCaching):
             return
         if key not in self.cache_data:
             if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
-                lru_key, _ = self.cache_data.popitem(True)
-                print("DISCARD:", lru_key)
+                mru_key, _ = self.cache_data.popitem(False)
+                print("DISCARD:", mru_key)
             self.cache_data[key] = item
             self.cache_data.move_to_end(key, last=False)
         else:
